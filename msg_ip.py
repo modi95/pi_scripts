@@ -4,6 +4,8 @@ import sys
 email = False
 sms = False
 prnt = False
+config_sc = open("config.sc", "r")
+detail = config_sc.readlines()
 
 
 def main():
@@ -13,6 +15,10 @@ def main():
 		print ip
 	if sms:
 		send_sms(ip)
+	if email:
+		send_email(ip)
+	config_sc.close()
+	return
 
 
 def create_conf():
@@ -38,13 +44,10 @@ def get_ip(conf):
 
 
 def send_sms(ip):
-	config_sc = open("config.sc", "r")
-	detail = config_sc.readlines()
 	ACCOUNT_SID = detail[0][detail[0].find('"')+1 : detail[0].rfind('"')]
 	AUTH_TOKEN = detail[1][detail[1].find('"')+1 : detail[1].rfind('"')]
 	ph_number = detail[2][detail[2].find('"')+1 : detail[2].rfind('"')]
 	twil_number = detail[3][detail[3].find('"')+1 : detail[3].rfind('"')]
-	config_sc.close()
 	from twilio.rest import TwilioRestClient
 
 	client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
@@ -53,8 +56,24 @@ def send_sms(ip):
 
 	#print message.sid
 	print ("sms sent to " + ph_number)
+	return
 
 def send_email(ip):
+	import smtplib
+	sender = 'from@fromdomain.com'
+	to_email = detail[4][detail[4].find('"')+1 : detail[4].rfind('"')]
+
+	message = """From: From Person <from@fromdomain.com>
+	To: To Person <to@todomain.com>
+	Subject: SMTP e-mail test
+
+	This is a test e-mail message.
+	"""
+
+	print to_email
+	s = smtplib.SMTP('localhost')
+	s.sendmail(sender, [to_email], message)
+	s.quit()
 	print ("This function has not been implemented as yet")
 
 
@@ -69,3 +88,4 @@ if __name__ == "__main__":
 	if "email" in sys.argv: email = True
 	if not sms and not email and not prnt: print_help()
 	main()
+	exit()
