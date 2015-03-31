@@ -1,0 +1,10 @@
+#TODOS.txt
+
+Install JVM if not available
+wget https://support.apple.com/downloads/DL1572/en_US/JavaForOSX2014-001.dmg
+
+Check about installing Applications without Gui
+	A lot of them just involve picking up an icon
+	and dragging them into the applications folder
+	Some of them also require unpackaging.
+	
