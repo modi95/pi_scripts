@@ -1,5 +1,8 @@
 #Ruby install log
 
+#Install XCode dev tools
+xcode-select --install
+
 #Installing brew package manager
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew install wget
@@ -16,8 +19,8 @@ rbenv global 2.2.1
 ruby -v
 
 #Installing Rails
-gem install nokogiri
-gem install rails
+sudo gem install nokogiri
+sudo gem install rails
 rbenv rehash
 rails -v
 
