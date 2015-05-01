@@ -10,5 +10,6 @@ These scripts are here to help you get up and running with your Raspberry Pi asa
 
 1. Download these files.
 2. Open config.sc and provide the details that you think would be relevent to the scripts you want to use.
+3. To run a command scripts when the RPi boots, add the command to the rc.local file in /etc/rc.local. Add these commands to the end of the file, before the  "exit 0" command at the end.
 
 I realize this isn't ideal. I'll work on making this easier soon.
