@@ -1,7 +1,7 @@
 import os
 import sys
 
-email = True
+email = False
 sms = False
 prnt = False
 config_sc = open("config.sc", "r")
