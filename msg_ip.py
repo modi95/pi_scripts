@@ -1,7 +1,7 @@
 import os
 import sys
 
-email = False
+email = True
 sms = False
 prnt = False
 config_sc = open("config.sc", "r")
@@ -59,23 +59,18 @@ def send_sms(ip):
 	return
 
 def send_email(ip):
-	import smtplib
-	sender = 'from@fromdomain.com'
-	to_email = detail[4][detail[4].find('"')+1 : detail[4].rfind('"')]
-
-	message = """From: From Person <from@fromdomain.com>
-	To: To Person <to@todomain.com>
-	Subject: SMTP e-mail test
-
-	This is a test e-mail message.
-	"""
-
-	print to_email
-	s = smtplib.SMTP('localhost')
-	s.sendmail(sender, [to_email], message)
-	s.quit()
-	print ("This function has not been implemented as yet")
-
+	email = detail[4][detail[4].find('"')+1 : detail[4].rfind('"')]
+	sendgrid_username = detail[5][detail[5].find('"')+1 : detail[5].rfind('"')]
+	sendgrid_password = detail[6][detail[6].find('"')+1 : detail[6].rfind('"')]
+	import sendgrid
+	sg = sendgrid.SendGridClient(sendgrid_username,sendgrid_password);
+	message = sendgrid.Mail()
+	message.add_to(email)
+	message.set_subject("Raspberry Pi IP Address")
+	message.set_html("Your Raspberry Pi's IP Address is " + ip)
+	message.set_text("Your Raspberry Pi's IP Address is " + ip)
+	message.set_from(email)
+	status, msg = sg.send(message)
 
 def print_help():
 	help_msg = '''
